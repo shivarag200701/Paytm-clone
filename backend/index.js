@@ -3,8 +3,14 @@ import router from "./routes/index.js";
 
 const app = express();
 const PORT = process.env.PORT || 3000;
-app.use(express.json());
 
+//middlewares
+app.use(
+  cors({
+    origin: "*",
+  })
+);
+app.use(express.json());
 app.use("/api/v1", router);
 
 app.listen(PORT, () => {
