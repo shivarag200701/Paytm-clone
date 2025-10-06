@@ -47,7 +47,9 @@ userRouter.post("/signup", async (req, res) => {
     password,
   });
 
-  const token = jwt.sign({ username }, process.env.JWT_SECRET);
+  const userId = newUser._id;
+
+  const token = jwt.sign({ userId }, process.env.JWT_SECRET);
 
   return res.json({ message: "User created successfully", token });
 });
@@ -72,11 +74,13 @@ userRouter.post("/signin", async (req, res) => {
     return res.status(411).json({ message: "Error while logging in" });
   }
 
-  if (user.password !== password) {
+  const userId = user[0]._id;
+
+  if (user[0].password !== password) {
     return res.status(411).json({ message: "Invalid credentials" });
   }
 
-  const token = jwt.sign({ username }, process.env.JWT_SECRET);
+  const token = jwt.sign({ userId }, process.env.JWT_SECRET);
   return res.status(200).json({ token });
 });
 
