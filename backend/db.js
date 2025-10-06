@@ -5,6 +5,8 @@ dotenv.config();
 
 mongoose.connect(process.env.MONGODB_URL);
 
+console.log(process.env.MONGODB_URL);
+
 console.log("Connected to MongoDB");
 
 const UserSchema = new Schema({
