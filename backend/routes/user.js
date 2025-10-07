@@ -1,6 +1,6 @@
 import express from "express";
 import { z } from "zod";
-import { User } from "../db.js";
+import { User, Account } from "../db.js";
 import jwt from "jsonwebtoken";
 import { authMiddleware } from "../middleware.js";
 
@@ -56,6 +56,12 @@ userRouter.post("/signup", async (req, res) => {
   });
 
   const userId = newUser._id;
+
+  //Initialize account with 1 - 10,000 random balance
+  const account = await Account.create({
+    userId,
+    balance: Math.floor(Math.random() * 10000) + 1,
+  });
 
   const token = jwt.sign({ userId }, process.env.JWT_SECRET);
 
