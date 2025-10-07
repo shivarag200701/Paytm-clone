@@ -11,7 +11,7 @@ export function authMiddleware(req, res, next) {
     try {
       const decoded = jwt.verify(token, process.env.JWT_SECRET);
       console.log(decoded.userId);
-      req.userId = decoded.userId;
+      req.body.userId = decoded.userId;
       next();
     } catch (err) {
       return res.status(403).json({ msg: "not authenticated" });
