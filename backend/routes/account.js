@@ -15,7 +15,7 @@ accountRouter.get("/balance", authMiddleware, async (req, res) => {
     return res.status(411).json({ msg: "account not found" });
   }
 
-  return res.status(200).json({ balance });
+  return res.status(200).json({ balance: balance });
 });
 
 accountRouter.post("/transfer", authMiddleware, async (req, res) => {

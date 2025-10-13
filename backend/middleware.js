@@ -3,8 +3,9 @@ import jwt from "jsonwebtoken";
 export function authMiddleware(req, res, next) {
   if (req.headers.authorization) {
     const token = req.headers.authorization.split(" ")[1];
+    console.log(token);
 
-    if (!token || token.startsWith("bearer")) {
+    if (!token) {
       return res.status(403).json({ msg: "not authenticated" });
     }
 
@@ -14,6 +15,8 @@ export function authMiddleware(req, res, next) {
       req.body.userId = decoded.userId;
       next();
     } catch (err) {
+      console.error("error in verifying", err);
+
       return res.status(403).json({ msg: "not authenticated" });
     }
   }

@@ -65,7 +65,7 @@ userRouter.post("/signup", async (req, res) => {
 
   const token = jwt.sign({ userId }, process.env.JWT_SECRET);
 
-  return res.json({ message: "User created successfully", token });
+  return res.json({ message: "User created successfully", token: token });
 });
 
 userRouter.post("/signin", async (req, res) => {
@@ -95,7 +95,9 @@ userRouter.post("/signin", async (req, res) => {
   }
 
   const token = jwt.sign({ userId }, process.env.JWT_SECRET);
-  return res.status(200).json({ token });
+  return res
+    .status(200)
+    .json({ message: "user sucessfully logged in", token: token });
 });
 
 userRouter.put("/", authMiddleware, async (req, res) => {
@@ -126,7 +128,9 @@ userRouter.get("/bulk", authMiddleware, async (req, res) => {
   const users = req.query.filter;
   console.log("params", users);
   if (!users) {
-    return res.status(411).json({ message: "Please provide user ids" });
+    // return res.status(411).json({ message: "Please provide user ids" });
+    const userList = await User.find();
+    return res.status(200).json({ users: userList });
   }
   const userList = await User.find({ username: { $in: users } });
 
