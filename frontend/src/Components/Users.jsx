@@ -35,8 +35,8 @@ const Users = () => {
     fetchBulkUsers();
   }, [token]);
 
-  function handleClick(id) {
-    window.location.href = `/send?id=${id}`;
+  function handleClick(id, name) {
+    window.location.href = `/send?id=${id}&name=${name}`;
   }
   return (
     <div className="px-8  w-full font-semibold">
@@ -48,13 +48,15 @@ const Users = () => {
         {users.map((user, index) => (
           <div key={index} className="flex gap-2 pt-1 justify-between   ">
             <div className="flex gap-2 pt-1 items-center justify-center">
-              <Label user={user.firstName} />
+              <Label user={user.firstName} color={"[#e4eaf2]"} />
               <div className="flex items-center justify-center text-sm">
                 <li>{user.firstName}</li>
               </div>
             </div>
             <div>
-              <Button onClick={() => handleClick(user.id)}>Send Money</Button>
+              <Button onClick={() => handleClick(user.id, user.firstName)}>
+                Send Money
+              </Button>
             </div>
           </div>
         ))}
