@@ -69,7 +69,11 @@ const Signup = () => {
           onChange={(e) => setPassword(e.target.value)}
         />
 
-        <Button onClick={handleClick} className="cursor-pointer">
+        <Button
+          onClick={handleClick}
+          className="cursor-pointer"
+          color={"#202938"}
+        >
           Sign up
         </Button>
         <div className="flex justify-center gap-1">

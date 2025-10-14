@@ -49,7 +49,9 @@ const SignIn = () => {
           onChange={(e) => setPassword(e.target.value)}
         />
 
-        <Button onClick={handleClick}>Sign up</Button>
+        <Button onClick={handleClick} color={"#202938"}>
+          Sign up
+        </Button>
         <div className="flex justify-center gap-1">
           <p className="">Don&apos;t have an account? </p>
           <a href="/signup" className="underline">

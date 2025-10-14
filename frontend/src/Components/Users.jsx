@@ -48,13 +48,16 @@ const Users = () => {
         {users.map((user, index) => (
           <div key={index} className="flex gap-2 pt-1 justify-between   ">
             <div className="flex gap-2 pt-1 items-center justify-center">
-              <Label user={user.firstName} color={"[#e4eaf2]"} />
+              <Label user={user.firstName} color={"#e4eaf2"} />
               <div className="flex items-center justify-center text-sm">
                 <li>{user.firstName}</li>
               </div>
             </div>
             <div>
-              <Button onClick={() => handleClick(user.id, user.firstName)}>
+              <Button
+                onClick={() => handleClick(user.id, user.firstName)}
+                color={"#202938"}
+              >
                 Send Money
               </Button>
             </div>

@@ -1,10 +1,11 @@
 import React from "react";
 
-const Button = ({ children, onClick }) => {
+const Button = ({ children, onClick, color }) => {
   return (
     <button
       onClick={onClick}
-      className="bg-[#202938] w-full rounded-xl text-white my-3 p-3 cursor-pointer"
+      className="w-full rounded-lg text-white my-3 sm:p-3 p-2 cursor-pointer"
+      style={{ backgroundColor: color }}
     >
       {children}
     </button>
