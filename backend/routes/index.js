@@ -8,7 +8,6 @@ const router = express.Router();
 router.get("/me", (req, res) => {
   if (req.headers.authorization) {
     const token = req.headers.authorization.split(" ")[1];
-    console.log(token);
 
     if (!token) {
       return res.status(403).json({ msg: "not authenticated" });

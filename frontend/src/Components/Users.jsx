@@ -3,11 +3,15 @@ import InputBox from "./InputBox";
 import Label from "./Label";
 import { useEffect, useMemo } from "react";
 import axios from "axios";
-
+import useDebounce from "../hooks/useDebounce";
 import Button from "./Button";
 
 const Users = () => {
   const [users, setUsers] = useState([]);
+  const [searchUser, setSearchUser] = useState("");
+  const debouncedValue = useDebounce(searchUser);
+  console.log(debouncedValue);
+  console.log("searchuser", searchUser);
 
   const token = useMemo(() => {
     const row = document.cookie.split("; ").find((r) => r.startsWith("token="));
@@ -17,9 +21,12 @@ const Users = () => {
   useEffect(() => {
     if (!token) return;
     async function fetchBulkUsers() {
-      const res = await axios.get("http://localhost:3001/api/v1/user/bulk", {
-        headers: { Authorization: `bearer ${token}` },
-      });
+      const res = await axios.get(
+        `http://localhost:3001/api/v1/user/bulk?filter=${debouncedValue}`,
+        {
+          headers: { Authorization: `bearer ${token}` },
+        }
+      );
       console.log("after");
 
       const fetchedUsers = res.data.users;
@@ -33,7 +40,7 @@ const Users = () => {
       setUsers(newUsers);
     }
     fetchBulkUsers();
-  }, [token]);
+  }, [token, debouncedValue]);
 
   function handleClick(id, name) {
     window.location.href = `/send?id=${id}&name=${name}`;
@@ -42,7 +49,11 @@ const Users = () => {
     <div className="px-8  w-full font-semibold">
       <div>Users</div>
       <div>
-        <InputBox placeholder={"Search users....."} />
+        <InputBox
+          placeholder={"Search users....."}
+          value={searchUser}
+          onChange={(e) => setSearchUser(e.target.value)}
+        />
       </div>
       <ul>
         {users.map((user, index) => (

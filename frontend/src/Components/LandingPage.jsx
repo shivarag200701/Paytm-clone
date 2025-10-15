@@ -9,7 +9,6 @@ const LandingPage = () => {
       .find((row) => row.startsWith("token="));
 
     const token = tokenCookie?.split("=")[1];
-    console.log(token);
 
     if (!token) {
       console.log("here");
@@ -17,14 +16,22 @@ const LandingPage = () => {
       window.location.href = "/signup";
     }
     async function fetchUser() {
-      const res = await axios.get("http://localhost:3001/api/v1/me", {
-        headers: { Authorization: `bearer ${token}` },
-      });
-      const userId = res.data.userId;
-      if (userId) {
-        window.location.href = "/dashboard";
+      try {
+        console.log("here");
+
+        const res = await axios.get("http://localhost:3001/api/v1/me", {
+          headers: { Authorization: `bearer ${token}` },
+        });
+        console.log("response", res.response.data);
+
+        const userId = res.data.userId;
+        if (userId) {
+          window.location.href = "/dashboard";
+        }
+      } catch (err) {
+        console.error("failed while authentication of token:", err);
+        window.location.href = "/signup";
       }
-      Window.location.href = "/signup";
     }
     fetchUser();
   }, []);
